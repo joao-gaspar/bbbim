@@ -67,7 +67,7 @@ export default async function HomePage({ searchParams }: PageProps) {
               Acervo de Tecnologia & Construção
             </span>
             <h1 className="text-3xl md:text-5xl font-black mb-5 leading-tight tracking-tight text-foreground">
-              A melhor escola de <span className="text-primary">BIM</span> do Brasil evoluiu. <br />
+              A Empresa Brasileira de <span className="text-primary">BIM</span> evoluiu. <br />
               <span className="text-2xl md:text-3xl font-medium text-slate-500 block mt-2">
                 Conheça o acervo da biblioteca <span className="font-bold text-primary">BBBIM</span>.
               </span>
