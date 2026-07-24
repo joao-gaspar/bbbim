@@ -90,14 +90,9 @@ export default function BookCard({ book }: { book: Product }) {
       </Link>
 
       <div className="p-3 flex flex-col flex-1 bg-white">
-        {/* Category badge */}
-        <span className="text-[9px] font-bold text-accent uppercase tracking-wider mb-1">
-          {book.category?.name || 'Acervo Geral'}
-        </span>
-        
         {/* Title */}
         <Link href={`/livro/${book.slug}`} className="flex-1 cursor-pointer">
-          <h3 className="text-xs font-bold text-foreground leading-snug line-clamp-2 hover:text-primary transition-colors mb-2">
+          <h3 className="text-xs font-bold text-foreground leading-snug line-clamp-3 hover:text-primary transition-colors mb-2">
             {book.title}
           </h3>
         </Link>
