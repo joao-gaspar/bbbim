@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { isAdminUser } from '@/lib/auth/admin'
 import { redirect } from 'next/navigation'
 import AdminProductForm from '@/components/AdminProductForm'
 import type { Metadata } from 'next'
@@ -10,10 +11,10 @@ export const metadata: Metadata = {
 export default async function NewProductPage() {
   const supabase = await createClient()
 
-  // 1. Verificar autenticação no servidor
+  // 1. Verificar autenticação e permissão de ADMIN no servidor
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
-    redirect('/admin/login')
+  if (!user || !isAdminUser(user)) {
+    redirect('/admin/login?error=unauthorized')
   }
 
   // 2. Buscar categorias de produtos para preencher o formulário

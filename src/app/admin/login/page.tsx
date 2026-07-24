@@ -1,17 +1,25 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { isAdminUser } from '@/lib/auth/admin'
 import { ShieldAlert, KeyRound, Mail } from 'lucide-react'
 
-export default function LoginPage() {
+function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const supabase = createClient()
+
+  useEffect(() => {
+    if (searchParams.get('error') === 'unauthorized') {
+      setErrorMsg('Acesso Restrito: sua conta é de Leitor/Membro e não tem acesso ao painel de administração.')
+    }
+  }, [searchParams])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,13 +41,21 @@ export default function LoginPage() {
         password: trimmedPassword,
       })
 
-      if (error) {
+      if (error || !data.user) {
         setErrorMsg('E-mail ou senha incorretos.')
         setLoading(false)
         return
       }
 
-      // Login bem sucedido!
+      // Validar se o usuário autenticado tem permissão de Admin
+      if (!isAdminUser(data.user)) {
+        await supabase.auth.signOut()
+        setErrorMsg('Acesso Restrito: este e-mail está cadastrado como Leitor/Membro e não pode alterar o acervo da biblioteca.')
+        setLoading(false)
+        return
+      }
+
+      // Login de Admin bem sucedido!
       router.push('/admin/dashboard')
       router.refresh()
     } catch (err: any) {
@@ -79,7 +95,7 @@ export default function LoginPage() {
             {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                Endereço de E-mail
+                Endereço de E-mail do Administrador
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -137,5 +153,13 @@ export default function LoginPage() {
 
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-slate-400">Carregando...</div>}>
+      <LoginForm />
+    </Suspense>
   )
 }

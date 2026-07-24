@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { isAdminUser } from '@/lib/auth/admin'
 import { redirect, notFound } from 'next/navigation'
 import AdminProductForm from '@/components/AdminProductForm'
 import type { Metadata } from 'next'
@@ -31,12 +32,10 @@ function parseHtmlDescription(html: string | null) {
 
   // 2. Extrair metadados específicos baseados nos padrões <strong>Rótulo</strong>: Valor
   const getMetadataValue = (label: string) => {
-    // Regex para buscar o valor após <strong>Rotulo</strong>:
     const regex = new RegExp(`<strong>${label}</strong>:\\s*([^<\r\n\t\\n]+)`, 'i')
     const match = regex.exec(html)
     if (match) {
       const val = match[1].trim()
-      // Ignorar shortcodes antigos do WordPress
       if (val.includes('[acf')) {
         return ''
       }
@@ -59,10 +58,10 @@ export default async function EditProductPage({ params }: Props) {
   const { slug } = await params
   const supabase = await createClient()
 
-  // 1. Verificar autenticação no servidor
+  // 1. Verificar autenticação e permissão de ADMIN no servidor
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
-    redirect('/admin/login')
+  if (!user || !isAdminUser(user)) {
+    redirect('/admin/login?error=unauthorized')
   }
 
   // 2. Buscar categorias de produtos para o formulário

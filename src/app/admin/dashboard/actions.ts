@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { isAdminUser } from '@/lib/auth/admin'
 import { revalidatePath } from 'next/cache'
 
 // Função auxiliar para gerar slugs de forma segura
@@ -51,10 +52,10 @@ export async function createProduct(formData: {
 }) {
   const supabase = await createClient()
   
-  // 1. Verificar se usuário está logado no servidor
+  // 1. Verificar se usuário está logado e se é ADMIN
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
-    return { success: false, error: 'Acesso não autorizado' }
+  if (!user || !isAdminUser(user)) {
+    return { success: false, error: 'Acesso negado: apenas administradores do acervo podem cadastrar itens.' }
   }
 
   try {
@@ -140,10 +141,10 @@ export async function updateProduct(
 ) {
   const supabase = await createClient()
 
-  // 1. Verificar se usuário está logado
+  // 1. Verificar se usuário está logado e se é ADMIN
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
-    return { success: false, error: 'Acesso não autorizado' }
+  if (!user || !isAdminUser(user)) {
+    return { success: false, error: 'Acesso negado: apenas administradores podem alterar o acervo.' }
   }
 
   try {
@@ -215,10 +216,10 @@ export async function updateProduct(
 export async function deleteProduct(id: number) {
   const supabase = await createClient()
 
-  // 1. Verificar se usuário está logado
+  // 1. Verificar se usuário está logado e se é ADMIN
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
-    return { success: false, error: 'Acesso não autorizado' }
+  if (!user || !isAdminUser(user)) {
+    return { success: false, error: 'Acesso negado: apenas administradores podem excluir itens.' }
   }
 
   try {
