@@ -105,32 +105,32 @@ export default function HeroCoverCarousel() {
     >
       
       {/* ── Slides Showcase Container ── */}
-      <div className="relative w-full max-w-[260px] h-[150px] flex items-center justify-center">
+      <div className="relative w-full max-w-[460px] h-[310px] flex items-center justify-center">
         
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute -left-4 z-20 w-6 h-6 rounded-full bg-white/90 shadow-md border border-border flex items-center justify-center text-slate-700 hover:text-primary hover:scale-110 transition-all cursor-pointer"
+          className="absolute -left-6 z-20 w-9 h-9 rounded-full bg-white/90 shadow-lg border border-border flex items-center justify-center text-slate-700 hover:text-primary hover:scale-110 transition-all cursor-pointer"
           title="Conjunto anterior"
         >
-          <ChevronLeft size={14} />
+          <ChevronLeft size={20} />
         </button>
 
         <button
           onClick={nextSlide}
-          className="absolute -right-4 z-20 w-6 h-6 rounded-full bg-white/90 shadow-md border border-border flex items-center justify-center text-slate-700 hover:text-primary hover:scale-110 transition-all cursor-pointer"
+          className="absolute -right-6 z-20 w-9 h-9 rounded-full bg-white/90 shadow-lg border border-border flex items-center justify-center text-slate-700 hover:text-primary hover:scale-110 transition-all cursor-pointer"
           title="Próximo conjunto"
         >
-          <ChevronRight size={14} />
+          <ChevronRight size={20} />
         </button>
 
         {/* ── Active Cover Pair Render ── */}
-        <div key={currentSet.id} className="flex gap-3 items-center transition-all duration-500 ease-in-out">
+        <div key={currentSet.id} className="flex gap-6 items-center transition-all duration-500 ease-in-out">
           
           {/* Left Book Cover Card */}
           <Link
             href={`/livro/${currentSet.slugLeft}`}
-            className="group relative w-20 sm:w-24 h-28 sm:h-32 rounded-lg overflow-hidden shadow-lg origin-bottom -rotate-6 transform hover:rotate-0 hover:scale-105 transition-all duration-300 border border-slate-200/80 bg-white flex flex-col justify-between"
+            className="group relative w-36 sm:w-44 h-52 sm:h-64 rounded-2xl overflow-hidden shadow-2xl origin-bottom -rotate-6 transform hover:rotate-0 hover:scale-105 transition-all duration-300 border border-slate-200/80 bg-white flex flex-col justify-between"
           >
             {/* Cover Image */}
             <div className="relative w-full h-full bg-slate-100 flex items-center justify-center overflow-hidden">
@@ -140,8 +140,8 @@ export default function HeroCoverCarousel() {
                 alt={currentSet.titleLeft}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-1.5">
-                <span className="text-[8px] font-bold text-white leading-tight line-clamp-2">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                <span className="text-[11px] font-bold text-white leading-tight line-clamp-2">
                   {currentSet.titleLeft}
                 </span>
               </div>
@@ -151,7 +151,7 @@ export default function HeroCoverCarousel() {
           {/* Right Book Cover Card */}
           <Link
             href={`/livro/${currentSet.slugRight}`}
-            className="group relative w-20 sm:w-24 h-28 sm:h-32 rounded-lg overflow-hidden shadow-lg rotate-6 transform hover:rotate-0 hover:scale-105 transition-all duration-300 border border-slate-200/80 bg-white flex flex-col justify-between"
+            className="group relative w-36 sm:w-44 h-52 sm:h-64 rounded-2xl overflow-hidden shadow-2xl rotate-6 transform hover:rotate-0 hover:scale-105 transition-all duration-300 border border-slate-200/80 bg-white flex flex-col justify-between"
           >
             {/* Cover Image */}
             <div className="relative w-full h-full bg-slate-100 flex items-center justify-center overflow-hidden">
@@ -161,8 +161,8 @@ export default function HeroCoverCarousel() {
                 alt={currentSet.titleRight}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-1.5">
-                <span className="text-[8px] font-bold text-white leading-tight line-clamp-2">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                <span className="text-[11px] font-bold text-white leading-tight line-clamp-2">
                   {currentSet.titleRight}
                 </span>
               </div>
