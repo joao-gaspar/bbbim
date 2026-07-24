@@ -146,11 +146,6 @@ export default function HeroCoverCarousel() {
                 </span>
               </div>
             </div>
-            {currentSet.badgeLeft && (
-              <span className="absolute top-2 left-2 text-[8px] font-bold uppercase tracking-wider bg-primary/90 text-white px-2 py-0.5 rounded-md shadow-xs backdrop-blur-xs">
-                {currentSet.badgeLeft}
-              </span>
-            )}
           </Link>
 
           {/* Right Book Cover Card */}
@@ -172,11 +167,6 @@ export default function HeroCoverCarousel() {
                 </span>
               </div>
             </div>
-            {currentSet.badgeRight && (
-              <span className="absolute top-2 right-2 text-[8px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-0.5 rounded-md shadow-xs backdrop-blur-xs">
-                {currentSet.badgeRight}
-              </span>
-            )}
           </Link>
 
         </div>
@@ -198,10 +188,6 @@ export default function HeroCoverCarousel() {
           />
         ))}
       </div>
-      
-      <span className="text-[10px] text-slate-400 font-semibold mt-2 uppercase tracking-wider">
-        Conjunto {currentIndex + 1} de 5 • Capas Reais do Acervo
-      </span>
 
     </div>
   )
