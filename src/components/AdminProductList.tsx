@@ -72,7 +72,7 @@ export default function AdminProductList({ initialProducts, categories }: Props)
           <img 
             src="/logo/logo-preto.png" 
             alt="BBBIM Logo" 
-            className="h-9 w-auto object-contain hidden sm:block" 
+            className="h-5 w-auto object-contain hidden sm:block" 
           />
           <div>
             <h1 className="text-xl font-black text-foreground">Gerenciamento de Acervo</h1>

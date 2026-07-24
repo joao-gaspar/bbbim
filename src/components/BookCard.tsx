@@ -89,34 +89,34 @@ export default function BookCard({ book }: { book: Product }) {
         )}
       </Link>
 
-      <div className="p-4 flex flex-col flex-1 bg-white">
+      <div className="p-3 flex flex-col flex-1 bg-white">
         {/* Category badge */}
-        <span className="text-[10px] font-bold text-accent uppercase tracking-wider mb-1">
+        <span className="text-[9px] font-bold text-accent uppercase tracking-wider mb-1">
           {book.category?.name || 'Acervo Geral'}
         </span>
         
         {/* Title */}
         <Link href={`/livro/${book.slug}`} className="flex-1 cursor-pointer">
-          <h3 className="text-sm font-bold text-foreground leading-snug line-clamp-2 hover:text-primary transition-colors">
+          <h3 className="text-xs font-bold text-foreground leading-snug line-clamp-2 hover:text-primary transition-colors mb-2">
             {book.title}
           </h3>
         </Link>
 
-        {/* Availability / Action */}
-        <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between">
+        {/* Footer info & CTA */}
+        <div className="pt-2 border-t border-border flex items-center justify-between gap-1 text-[10px] mt-auto">
           {isDigital ? (
-            <span className="text-[10px] font-medium text-accent bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full">
+            <span className="text-accent font-bold bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded-full text-[8px]">
               Digital
             </span>
           ) : (
-            <span className="text-[10px] font-medium text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">
+            <span className="text-slate-600 font-bold bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded-full text-[8px]">
               Físico
             </span>
           )}
-          
-          <Link 
+
+          <Link
             href={`/livro/${book.slug}`}
-            className="bg-primary hover:bg-primary-dark text-white px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-wide transition-colors cursor-pointer border-none shadow-xs"
+            className="inline-flex items-center gap-1 bg-primary hover:bg-primary-dark text-white px-2.5 py-1 rounded-lg text-[9px] font-bold transition-colors cursor-pointer border-none shadow-xs"
           >
             {isDigital ? 'Acessar' : 'Reservar'}
           </Link>

@@ -69,7 +69,7 @@ export default async function HomePage({ searchParams }: PageProps) {
               <img 
                 src="/logo/logo-extenso-preto.png" 
                 alt="BBBIM — Biblioteca de Tecnologia e Construção" 
-                className="h-10 md:h-12 w-auto object-contain" 
+                className="h-5 md:h-6 w-auto object-contain" 
               />
             </div>
             <h1 className="text-3xl md:text-5xl font-black mb-5 leading-tight tracking-tight text-foreground">
@@ -210,7 +210,7 @@ export default async function HomePage({ searchParams }: PageProps) {
 
             {/* Vitrine Grid */}
             {products && products.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 animate-fade-in-up">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 animate-fade-in-up">
                 {products.map(book => (
                   <BookCard key={book.id} book={book as any} />
                 ))}

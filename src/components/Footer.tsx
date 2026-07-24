@@ -21,7 +21,7 @@ export default function Footer() {
               <img 
                 src="/logo/logo-branco.png" 
                 alt="BBBIM — Biblioteca de Tecnologia e Construção" 
-                className="h-10 w-auto object-contain" 
+                className="h-5 w-auto object-contain" 
               />
             </div>
             <p className="text-sm leading-relaxed text-slate-400">

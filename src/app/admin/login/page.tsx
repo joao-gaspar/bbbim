@@ -74,7 +74,7 @@ function LoginForm() {
           <img 
             src="/logo/logo-preto.png" 
             alt="BBBIM Logo" 
-            className="h-12 w-auto object-contain mb-4" 
+            className="h-6 w-auto object-contain mb-3" 
           />
           <h2 className="text-2xl font-black text-foreground tracking-tight">
             Painel Administrativo

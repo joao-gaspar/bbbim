@@ -38,7 +38,7 @@ export default function Header() {
             <img 
               src="/logo/logo-preto.png" 
               alt="BBBIM — Biblioteca de Tecnologia e Construção" 
-              className="h-10 md:h-11 w-auto object-contain" 
+              className="h-5 md:h-6 w-auto object-contain" 
             />
           </Link>
 
