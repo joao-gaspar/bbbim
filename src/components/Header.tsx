@@ -26,7 +26,7 @@ export default function Header() {
 
   return (
     <div className="sticky top-0 z-50 shadow-sm">
-      {/* EBBIM Top Decorative Stripe */}
+      {/* Top Decorative Stripe */}
       <div className="h-1 w-full bg-primary"></div>
 
       <header className="border-b border-border bg-white">
@@ -42,7 +42,7 @@ export default function Header() {
             />
           </Link>
 
-          {/* Search Bar (Center) in EBBIM Style */}
+          {/* Search Bar (Center) */}
           <div className="hidden md:flex flex-1 max-w-2xl">
             <form onSubmit={handleSearch} className="flex w-full border border-border rounded-full overflow-hidden bg-white shadow-xs focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
               <input 
@@ -58,7 +58,7 @@ export default function Header() {
             </form>
           </div>
 
-          {/* Actions with EBBIM colors */}
+          {/* Actions */}
           <div className="hidden md:flex items-center gap-6 text-foreground">
             <button className="flex items-center gap-2 hover:text-accent transition-colors cursor-pointer border-none bg-transparent">
               <User size={22} strokeWidth={1.75} className="text-muted-foreground group-hover:text-accent" />

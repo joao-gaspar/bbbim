@@ -168,7 +168,7 @@ export default async function BookDetailPage({ params }: Props) {
                 </div>
               )}
 
-              {/* Status card in EBBIM colors */}
+              {/* Status card */}
               <div className="w-full max-w-[280px] bg-[#eceff2]/40 rounded-xl p-4 border border-border text-center space-y-3">
                 <div className="text-xs text-foreground">
                   Status: 
@@ -188,7 +188,7 @@ export default async function BookDetailPage({ params }: Props) {
             {/* Column 2: Details & Description (Right) */}
             <div className="md:col-span-8 flex flex-col justify-between">
               <div>
-                {/* Category & Format in EBBIM tags */}
+                {/* Category & Format tags */}
                 <div className="flex flex-wrap items-center gap-2 mb-3">
                   {book.category && (
                     <Link href={`/?cat=${book.category.slug}`} className="text-xs font-bold text-accent bg-blue-50 border border-blue-200 px-3 py-1 rounded-full hover:bg-blue-100 transition-colors">
@@ -212,7 +212,7 @@ export default async function BookDetailPage({ params }: Props) {
                 </div>
               </div>
 
-              {/* Book Metadata details table in EBBIM colors */}
+              {/* Book Metadata details table */}
               {bookMetadata.length > 0 && (
                 <div className="border-t border-border pt-6">
                   <h3 className="text-xs font-bold uppercase text-slate-400 tracking-wider mb-3">Detalhes do Acervo</h3>

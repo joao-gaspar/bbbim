@@ -90,7 +90,7 @@ export default function BookCard({ book }: { book: Product }) {
       </Link>
 
       <div className="p-4 flex flex-col flex-1 bg-white">
-        {/* Category in EBBIM accent blue */}
+        {/* Category badge */}
         <span className="text-[10px] font-bold text-accent uppercase tracking-wider mb-1">
           {book.category?.name || 'Acervo Geral'}
         </span>

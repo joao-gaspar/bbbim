@@ -56,7 +56,7 @@ export default async function HomePage({ searchParams }: PageProps) {
 
   return (
     <div className="bg-[#eceff2]/40 min-h-screen">
-      {/* ── Banner Principal / Hero (Estilo Clean EBBIM) ── */}
+      {/* ── Banner Principal / Hero ── */}
       <section className="relative bg-white text-foreground overflow-hidden py-16 px-6 border-b border-border">
         <div className="absolute inset-0 opacity-5"
           style={{ backgroundImage: 'radial-gradient(circle at 10% 20%, #004380 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
@@ -90,7 +90,7 @@ export default async function HomePage({ searchParams }: PageProps) {
             </div>
           </div>
           
-          {/* Cover showcase with EBBIM colors */}
+          {/* Cover showcase */}
           <div className="hidden lg:flex gap-6 items-center">
             <div className="w-36 h-48 rounded-xl shadow-xl origin-bottom -rotate-6 transform transition-all hover:rotate-0"
               style={{ background: 'linear-gradient(135deg, #004380, #0073c6)', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>

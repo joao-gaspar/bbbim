@@ -112,7 +112,7 @@ function LoginForm() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="exemplo@ebbim.com.br"
+                  placeholder="exemplo@bbbim.com.br"
                   className="w-full pl-10 pr-4 py-3 border border-border rounded-xl text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-foreground placeholder:text-slate-400"
                 />
               </div>

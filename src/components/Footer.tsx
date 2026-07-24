@@ -14,7 +14,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-          {/* Brand Column (EBBIM style) */}
+          {/* Brand Column */}
           <div>
             <div className="flex items-center gap-3 mb-5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -44,27 +44,19 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Navigation Column */}
+          {/* Contact Column */}
           <div>
-            <h3 className="font-semibold text-white mb-5 text-sm uppercase tracking-wider">Navegação</h3>
-            <ul className="space-y-3">
-              {[
-                { href: '/', label: 'Catálogo Geral' },
-                { href: '/', label: 'Como Funciona o Empréstimo' },
-                { href: '/', label: 'Regulamento' },
-                { href: '/', label: 'Ajuda / Contato' },
-              ].map((l, i) => (
-                <li key={i}>
-                  <Link href={l.href} className="text-sm hover:text-accent transition-colors">{l.label}</Link>
-                </li>
-              ))}
-            </ul>
+            <h3 className="font-semibold text-white mb-5 text-sm uppercase tracking-wider">Biblioteca Técnica</h3>
+            <p className="text-sm leading-relaxed text-slate-400 mb-4">
+              Sistema de gestão de biblioteca de livros físicos, periódicos, DVDs, CDs e acervo eletrônico digitalizado.
+            </p>
           </div>
+
         </div>
 
         {/* Bottom Bar */}
         <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-slate-500">© {new Date().getFullYear()} Biblioteca BBBIM. Integrante do ecossistema EBBIM.</p>
+          <p className="text-xs text-slate-500">© {new Date().getFullYear()} Biblioteca BBBIM. Todos os direitos reservados.</p>
           <p className="text-xs text-slate-500">Sistema de Gestão de Acervo Digital + Físico</p>
         </div>
       </div>
