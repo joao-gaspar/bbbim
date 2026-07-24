@@ -72,9 +72,9 @@ export default async function HomePage({ searchParams }: PageProps) {
               />
             </div>
             <h1 className="text-3xl md:text-5xl font-black mb-5 leading-tight tracking-tight text-foreground">
-              A Empresa Brasileira de <span className="text-primary">BIM</span> evoluiu. <br />
+              O maior acervo de <span className="text-primary">BIM</span> do Brasil. <br />
               <span className="text-2xl md:text-3xl font-medium text-slate-500 block mt-2">
-                Conheça o acervo técnico oficial da marca <span className="font-bold text-primary">BBBIM</span>.
+                Conheça a biblioteca técnica <span className="font-bold text-primary">BBBIM</span>.
               </span>
             </h1>
             <p className="text-slate-500 text-sm md:text-base leading-relaxed mb-8 max-w-xl">
