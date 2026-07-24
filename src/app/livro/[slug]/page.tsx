@@ -2,9 +2,10 @@ import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowLeft, BookOpen, Calendar, Shield, Share2, Layers, Disc, Book } from 'lucide-react'
+import { ArrowLeft, BookOpen, Shield, Layers, Disc, Book } from 'lucide-react'
 import BookCard from '@/components/BookCard'
 import { cleanDescription } from '@/lib/utils'
+import uploadsMap from '@/lib/uploads-map.json'
 import type { Metadata } from 'next'
 
 interface Props {
@@ -114,6 +115,8 @@ export default async function BookDetailPage({ params }: Props) {
     MediaIcon = Disc
   }
 
+  const imageUrl = (uploadsMap as Record<string, string>)[book.slug] || null
+
   return (
     <div className="bg-[#f4f6f8] min-h-screen py-10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -131,33 +134,46 @@ export default async function BookDetailPage({ params }: Props) {
             
             {/* Column 1: Book Cover Showcase (Left) */}
             <div className="md:col-span-4 flex flex-col items-center">
-              <div 
-                className="w-full max-w-[280px] aspect-[1/1.38] rounded-2xl shadow-xl flex flex-col justify-between p-6 mb-6 select-none"
-                style={{ background: coverStyle.bg, color: coverStyle.text }}
-              >
-                <div className="flex justify-between items-start">
-                  <span className="text-[10px] uppercase font-bold tracking-wider opacity-75">
-                    BBBIM Acervo
-                  </span>
-                  <MediaIcon className="w-5 h-5 opacity-80" />
+              {imageUrl ? (
+                <div className="w-full max-w-[280px] aspect-[1/1.38] relative rounded-2xl overflow-hidden shadow-xl mb-6">
+                  <Image 
+                    src={imageUrl} 
+                    alt={book.title} 
+                    fill 
+                    priority
+                    sizes="(max-width: 640px) 280px, 350px"
+                    className="object-cover"
+                  />
                 </div>
-                <div className="my-auto">
-                  <h2 className="font-serif font-bold text-lg md:text-xl leading-tight tracking-wide line-clamp-5">
-                    {book.title}
-                  </h2>
+              ) : (
+                <div 
+                  className="w-full max-w-[280px] aspect-[1/1.38] rounded-2xl shadow-xl flex flex-col justify-between p-6 mb-6 select-none animate-fade-in"
+                  style={{ background: coverStyle.bg, color: coverStyle.text }}
+                >
+                  <div className="flex justify-between items-start">
+                    <span className="text-[10px] uppercase font-bold tracking-wider opacity-75">
+                      BBBIM Acervo
+                    </span>
+                    <MediaIcon className="w-5 h-5 opacity-80" />
+                  </div>
+                  <div className="my-auto">
+                    <h2 className="font-serif font-bold text-lg md:text-xl leading-tight tracking-wide line-clamp-5">
+                      {book.title}
+                    </h2>
+                  </div>
+                  <div className="border-t border-white/20 pt-2 flex justify-between items-center text-[10px]">
+                    <span className="font-semibold">{mediaLabel}</span>
+                    <span className="opacity-75">ID: {book.wp_id || book.id}</span>
+                  </div>
                 </div>
-                <div className="border-t border-white/20 pt-2 flex justify-between items-center text-[10px]">
-                  <span className="font-semibold">{mediaLabel}</span>
-                  <span className="opacity-75">ID: {book.wp_id || book.id}</span>
-                </div>
-              </div>
+              )}
 
               {/* Status card */}
               <div className="w-full max-w-[280px] bg-slate-50 rounded-xl p-4 border border-slate-100 text-center space-y-3">
                 <div className="text-xs">
                   Status: 
                   {isDigital ? (
-                    <span className="font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full ml-1.5">Disponível Online</span>
+                    <span className="font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full ml-1.5 font-sans">Disponível Online</span>
                   ) : (
                     <span className="font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full ml-1.5 font-sans">Disponível para Retirada</span>
                   )}

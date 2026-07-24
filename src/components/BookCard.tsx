@@ -1,8 +1,10 @@
 import Link from 'next/link'
-import { Book, Film, Disc, BookOpen, Layers } from 'lucide-react'
+import Image from 'next/image'
+import { Book, BookOpen, Layers, Disc } from 'lucide-react'
 import { Product } from '@/lib/types'
+import uploadsMap from '@/lib/uploads-map.json'
 
-// Helper para gerar cores de capa com base no título do livro
+// Helper para gerar cores de capa com base no título do livro (como fallback)
 function getBookCoverStyle(title: string) {
   const hash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
   const designs = [
@@ -39,41 +41,52 @@ export default function BookCard({ book }: { book: Product }) {
   }
 
   const coverStyle = getBookCoverStyle(book.title)
+  const imageUrl = (uploadsMap as Record<string, string>)[book.slug] || null
 
   return (
     <div className="group flex flex-col bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300">
       
-      {/* Book Cover Placeholder */}
-      <Link href={`/livro/${book.slug}`} className="relative block w-full pt-[135%] overflow-hidden cursor-pointer">
-        <div 
-          className="absolute inset-0 flex flex-col justify-between p-6 transition-transform duration-500 group-hover:scale-[1.03]"
-          style={{ background: coverStyle.bg, color: coverStyle.text }}
-        >
-          {/* Header of book */}
-          <div className="flex justify-between items-start">
-            <span className="text-[10px] uppercase font-bold tracking-wider opacity-75">
-              BBBIM Acervo
-            </span>
-            <MediaIcon className="w-5 h-5 opacity-80" />
-          </div>
+      {/* Book Cover */}
+      <Link href={`/livro/${book.slug}`} className="relative block w-full pt-[135%] overflow-hidden cursor-pointer bg-slate-100 border-b border-gray-50">
+        {imageUrl ? (
+          <Image 
+            src={imageUrl} 
+            alt={book.title} 
+            fill 
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        ) : (
+          <div 
+            className="absolute inset-0 flex flex-col justify-between p-6 transition-transform duration-500 group-hover:scale-[1.03]"
+            style={{ background: coverStyle.bg, color: coverStyle.text }}
+          >
+            {/* Header of book */}
+            <div className="flex justify-between items-start">
+              <span className="text-[10px] uppercase font-bold tracking-wider opacity-75">
+                BBBIM Acervo
+              </span>
+              <MediaIcon className="w-5 h-5 opacity-80" />
+            </div>
 
-          {/* Book Title on Cover */}
-          <div className="my-auto">
-            <p className="font-serif font-bold text-sm md:text-base leading-tight tracking-wide line-clamp-4">
-              {book.title}
-            </p>
-          </div>
+            {/* Book Title on Cover */}
+            <div className="my-auto">
+              <p className="font-serif font-bold text-sm md:text-base leading-tight tracking-wide line-clamp-4">
+                {book.title}
+              </p>
+            </div>
 
-          {/* Footer of book */}
-          <div className="border-t border-white/20 pt-2 flex justify-between items-center text-[10px]">
-            <span className="font-semibold truncate max-w-[100px]">
-              {mediaLabel}
-            </span>
-            <span className="opacity-75">
-              ID: {book.wp_id || book.id}
-            </span>
+            {/* Footer of book */}
+            <div className="border-t border-white/20 pt-2 flex justify-between items-center text-[10px]">
+              <span className="font-semibold truncate max-w-[100px]">
+                {mediaLabel}
+              </span>
+              <span className="opacity-75">
+                ID: {book.wp_id || book.id}
+              </span>
+            </div>
           </div>
-        </div>
+        )}
       </Link>
 
       <div className="p-4 flex flex-col flex-1 bg-white">
