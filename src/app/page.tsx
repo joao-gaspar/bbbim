@@ -1,185 +1,236 @@
 import { createClient } from '@/lib/supabase/server'
-import PostCard from '@/components/PostCard'
+import BookCard from '@/components/BookCard'
 import Link from 'next/link'
-import { ArrowRight, BookOpen, Layers, Cpu } from 'lucide-react'
+import { ArrowRight, BookOpen, Search, X, Filter } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Dicas de BIM — Building Information Modeling no Brasil',
-  description: 'Tutoriais, dicas e novidades sobre BIM, Revit, ArchiCAD e IFC. O portal de referência em BIM no Brasil.',
+  title: 'Biblioteca BBBIM — Gestão e Empréstimo de Acervo Técnico BIM',
+  description: 'Consulte e reserve livros, revistas técnicas, CDs, DVDs e documentos eletrônicos sobre BIM, Revit, ArchiCAD e IFC.',
 }
 
-export const revalidate = 3600 // ISR: revalida a cada 1h
+export const revalidate = 60 // Revalida a cada 60s (ISR rápida para atualizações)
 
-const highlights = [
-  { icon: BookOpen, label: 'Tutoriais', desc: 'Guias passo a passo para softwares BIM', href: '/categoria/bim' },
-  { icon: Layers, label: 'Coordenação', desc: 'Compatibilização de modelos BIM', href: '/categoria/coordenacao' },
-  { icon: Cpu, label: 'IFC', desc: 'Padrão aberto para intercâmbio de dados', href: '/categoria/ifc' },
-]
+interface PageProps {
+  searchParams: Promise<{ q?: string; cat?: string }>
+}
 
-export default async function HomePage() {
+export default async function HomePage({ searchParams }: PageProps) {
+  const params = await searchParams
+  const query = params.q || ''
+  const categorySlug = params.cat || ''
+
   const supabase = await createClient()
 
-  // Buscar posts mais recentes
-  const { data: posts } = await supabase
-    .from('products')
-    .select(`
-      id, title, slug, excerpt, cover_image, published_at,
-      author:authors(id, name, avatar_url),
-      category:categories(id, name, slug)
-    `)
-    .eq('status', 'published')
-    .order('published_at', { ascending: false })
-    .limit(9)
-
-  const featuredPost = posts?.[0] ?? null
-  const recentPosts = posts?.slice(1) ?? []
-
-  // Buscar categorias com contagem
+  // 1. Buscar categorias de produtos do Supabase
   const { data: categories } = await supabase
     .from('product_categories')
     .select('id, name, slug')
-    .limit(6)
+    .order('name', { ascending: true })
+
+  // 2. Montar a busca de produtos
+  let queryBuilder = supabase
+    .from('products')
+    .select(`
+      id, wp_id, title, slug, description, price, regular_price, sale_price, category_id, status, published_at,
+      category:product_categories(id, name, slug)
+    `)
+    .eq('status', 'published')
+    .order('title', { ascending: true })
+
+  if (query) {
+    queryBuilder = queryBuilder.ilike('title', `%${query}%`)
+  }
+
+  if (categorySlug) {
+    const selectedCategory = categories?.find(c => c.slug === categorySlug)
+    if (selectedCategory) {
+      queryBuilder = queryBuilder.eq('category_id', selectedCategory.id)
+    }
+  }
+
+  const { data: products } = await queryBuilder.limit(40)
+
+  // Identificar categoria selecionada
+  const activeCategory = categories?.find(c => c.slug === categorySlug)
 
   return (
-    <div>
-      {/* ── Hero ── */}
-      <section style={{ background: 'linear-gradient(135deg, #0c4a6e 0%, #0ea5e9 60%, #38bdf8 100%)' }}
-        className="relative overflow-hidden py-20 px-4">
-        <div className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-        <div className="max-w-3xl mx-auto text-center relative">
-          <span className="inline-block text-sky-200 text-sm font-semibold uppercase tracking-widest mb-4">
-            Portal BIM no Brasil
-          </span>
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-5 leading-tight">
-            Aprenda BIM com quem<br />
-            <span style={{ color: '#fbbf24' }}>vive na prática</span>
-          </h1>
-          <p className="text-sky-100 text-lg mb-8 leading-relaxed">
-            Tutoriais, dicas e novidades sobre Building Information Modeling, Revit, ArchiCAD e IFC.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/categorias"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all"
-              style={{ background: 'white', color: '#0284c7' }}>
-              Explorar Conteúdo <ArrowRight size={16} />
-            </Link>
-            <Link href="/busca"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm border border-sky-400/50 text-white hover:bg-white/10 transition-all">
-              Buscar Posts
-            </Link>
+    <div className="bg-[#f4f6f8] min-h-screen">
+      {/* ── Banner Principal / Hero ── */}
+      <section className="relative bg-[#333e48] text-white overflow-hidden py-14 px-6 border-b border-[#fed700]/30">
+        <div className="absolute inset-0 opacity-5"
+          style={{ backgroundImage: 'radial-gradient(circle at 10% 20%, white 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+          <div className="max-w-2xl">
+            <span className="inline-block bg-[#fed700] text-[#333e48] text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-4">
+              Acervo de Tecnologia & Construção
+            </span>
+            <h1 className="text-3xl md:text-5xl font-black mb-4 leading-tight tracking-tight">
+              Biblioteca Virtual & Física <br />
+              <span className="text-[#fed700]">BBBIM</span>
+            </h1>
+            <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6">
+              Explore nossa biblioteca técnica de BIM (Building Information Modeling). Pegue emprestado livros físicos, revistas especializadas, mídias ou acesse arquivos eletrônicos digitalizados de forma instantânea.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a href="#catalogo" className="bg-[#fed700] hover:bg-[#e8c400] text-[#333e48] px-6 py-3 rounded-full text-xs font-black transition-colors cursor-pointer border-none">
+                Explorar Acervo
+              </a>
+              <Link href="/" className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3 rounded-full text-xs font-black transition-colors">
+                Como Funciona?
+              </Link>
+            </div>
+          </div>
+          {/* Cover showcase */}
+          <div className="hidden lg:flex gap-4 items-center">
+            <div className="w-36 h-48 rounded-lg shadow-2xl origin-bottom -rotate-6 transform transition-all hover:rotate-0"
+              style={{ background: 'linear-gradient(135deg, #1e3a8a, #3b82f6)', padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <span className="text-[8px] uppercase font-bold tracking-wider text-blue-200">Revit</span>
+              <span className="font-serif font-black text-xs text-white">Manual de BIM Aplicado</span>
+              <span className="text-[8px] text-blue-200 border-t border-white/20 pt-1">Editora ProBooks</span>
+            </div>
+            <div className="w-36 h-48 rounded-lg shadow-2xl rotate-6 transform transition-all hover:rotate-0"
+              style={{ background: 'linear-gradient(135deg, #7c2d12, #ea580c)', padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <span className="text-[8px] uppercase font-bold tracking-wider text-orange-200">Revista</span>
+              <span className="font-serif font-black text-xs text-white">CADESIGN Especial</span>
+              <span className="text-[8px] text-orange-200 border-t border-white/20 pt-1">totalCAD</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── Highlights ── */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 -mt-8 mb-16 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {highlights.map(({ icon: Icon, label, desc, href }) => (
-            <Link key={label} href={href}
-              className="card-hover flex items-start gap-4 p-5 rounded-2xl"
-              style={{ background: 'white', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: '#e0f2fe' }}>
-                <Icon size={20} style={{ color: '#0284c7' }} />
+      {/* ── Catálogo e Busca ── */}
+      <div id="catalogo" className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <div className="flex flex-col lg:flex-row gap-8">
+          
+          {/* ── Sidebar (Filtro por Categorias) ── */}
+          <aside className="w-full lg:w-64 flex-shrink-0 space-y-6">
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-4">
+                <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
+                  <Filter size={16} className="text-[#fed700] filter brightness-90" />
+                  Categorias
+                </h3>
+                {categorySlug && (
+                  <Link href={query ? `/?q=${query}` : '/'} className="text-xs text-red-500 hover:underline flex items-center gap-1 font-semibold">
+                    <X size={12} /> Limpar
+                  </Link>
+                )}
               </div>
-              <div>
-                <h3 className="font-bold text-slate-900 text-sm mb-0.5">{label}</h3>
-                <p className="text-slate-500 text-xs">{desc}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
-
-        {/* ── Featured post ── */}
-        {featuredPost && (
-          <section className="mb-14 animate-fade-in-up">
-            <div className="flex items-center gap-3 mb-6">
-              <h2 className="text-xl font-bold text-slate-900">Destaque</h2>
-              <div className="flex-1 h-px bg-slate-200" />
-            </div>
-            <PostCard post={featuredPost as any} featured />
-          </section>
-        )}
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* ── Recent posts ── */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
-              <h2 className="text-xl font-bold text-slate-900">Últimos Posts</h2>
-              <div className="flex-1 h-px bg-slate-200" />
-            </div>
-
-            {recentPosts.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {recentPosts.map((post, i) => (
-                  <div key={post.id} className={`animate-fade-in-up animate-delay-${Math.min(i + 1, 3)}`}>
-                    <PostCard post={post as any} />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-16 rounded-2xl" style={{ background: 'white' }}>
-                <BookOpen size={40} className="mx-auto mb-3 text-slate-300" />
-                <p className="text-slate-500">Nenhum post publicado ainda.</p>
-                <p className="text-slate-400 text-sm mt-1">Aguarde novos conteúdos em breve!</p>
-              </div>
-            )}
-
-            {posts && posts.length >= 9 && (
-              <div className="text-center mt-8">
-                <Link href="/posts"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all"
-                  style={{ background: '#0ea5e9', color: 'white' }}>
-                  Ver todos os posts <ArrowRight size={16} />
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* ── Sidebar ── */}
-          <aside className="space-y-6">
-            {/* Categories */}
-            <div className="rounded-2xl p-6" style={{ background: 'white', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
-              <h3 className="font-bold text-slate-900 mb-4">Categorias</h3>
+              
               {categories && categories.length > 0 ? (
-                <ul className="space-y-2">
+                <ul className="space-y-1.5">
+                  <li>
+                    <Link 
+                      href={query ? `/?q=${query}` : '/'}
+                      className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                        !categorySlug 
+                          ? 'bg-[#fed700] text-[#333e48]' 
+                          : 'text-slate-600 hover:bg-slate-50'
+                      }`}
+                    >
+                      <span>Todos os Itens</span>
+                    </Link>
+                  </li>
                   {categories.map(cat => (
                     <li key={cat.id}>
-                      <Link href={`/categoria/${cat.slug}`}
-                        className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-sky-50 group transition-colors">
-                        <span className="text-sm font-medium text-slate-700 group-hover:text-sky-700">
-                          {cat.name}
-                        </span>
-                        <ArrowRight size={14} className="text-slate-300 group-hover:text-sky-500 transition-colors" />
+                      <Link 
+                        href={`/?cat=${cat.slug}${query ? `&q=${query}` : ''}`}
+                        className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                          categorySlug === cat.slug 
+                            ? 'bg-[#fed700] text-[#333e48]' 
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                        }`}
+                      >
+                        <span className="truncate">{cat.name}</span>
                       </Link>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-slate-400 text-sm">Nenhuma categoria ainda.</p>
+                <p className="text-slate-400 text-xs py-4 text-center">Nenhuma categoria encontrada.</p>
               )}
             </div>
 
-            {/* Newsletter CTA */}
-            <div className="rounded-2xl p-6 text-white"
-              style={{ background: 'linear-gradient(135deg, #0c4a6e, #0ea5e9)' }}>
-              <h3 className="font-bold mb-2">Fique atualizado</h3>
-              <p className="text-sky-100 text-sm mb-4">Novos conteúdos de BIM direto na sua caixa de entrada.</p>
-              <Link href="/sobre"
-                className="inline-block w-full text-center py-2.5 rounded-xl font-semibold text-sm transition-all"
-                style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.3)' }}>
-                Saiba mais
-              </Link>
+            {/* Regulamento rápido */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <h4 className="font-bold text-slate-800 text-sm mb-3">Como pegar emprestado?</h4>
+              <ul className="text-xs text-slate-500 space-y-3 leading-relaxed">
+                <li className="flex gap-2">
+                  <span className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700 flex-shrink-0">1</span>
+                  <span>Escolha o item e clique em <strong>Reservar</strong>.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700 flex-shrink-0">2</span>
+                  <span>Para itens digitais, o download ou leitura é instantâneo.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700 flex-shrink-0">3</span>
+                  <span>Itens físicos deverão ser retirados na biblioteca.</span>
+                </li>
+              </ul>
             </div>
           </aside>
+
+          {/* ── Main Catalog Grid ── */}
+          <main className="flex-1">
+            {/* Header de resultados */}
+            <div className="bg-white rounded-2xl p-5 mb-6 shadow-sm border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div>
+                <h2 className="text-lg font-bold text-slate-800 leading-tight">
+                  {activeCategory ? activeCategory.name : 'Catálogo Geral'}
+                </h2>
+                <p className="text-xs text-slate-400 mt-1">
+                  {products ? `${products.length} itens encontrados` : 'Buscando acervo...'}
+                  {query && ` para "${query}"`}
+                </p>
+              </div>
+
+              {/* Filtro ativo tag */}
+              {(query || categorySlug) && (
+                <div className="flex flex-wrap gap-2">
+                  {query && (
+                    <span className="inline-flex items-center gap-1.5 bg-slate-100 text-slate-700 text-[10px] font-bold px-3 py-1 rounded-full">
+                      Busca: {query}
+                      <Link href={`/${categorySlug ? `?cat=${categorySlug}` : ''}`} className="hover:text-red-500">
+                        <X size={12} />
+                      </Link>
+                    </span>
+                  )}
+                  {categorySlug && activeCategory && (
+                    <span className="inline-flex items-center gap-1.5 bg-slate-100 text-slate-700 text-[10px] font-bold px-3 py-1 rounded-full">
+                      Categoria: {activeCategory.name}
+                      <Link href={`/${query ? `?q=${query}` : ''}`} className="hover:text-red-500">
+                        <X size={12} />
+                      </Link>
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Vitrine Grid */}
+            {products && products.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 animate-fade-in-up">
+                {products.map(book => (
+                  <BookCard key={book.id} book={book as any} />
+                ))}
+              </div>
+            ) : (
+              <div className="bg-white rounded-2xl py-20 text-center border border-gray-100 shadow-sm">
+                <BookOpen size={48} className="mx-auto mb-4 text-slate-300" />
+                <h3 className="font-bold text-slate-800 text-lg mb-1">Nenhum item encontrado</h3>
+                <p className="text-slate-500 text-sm max-w-sm mx-auto">
+                  Tente alterar seus termos de busca ou selecione outra categoria na barra lateral.
+                </p>
+                <Link href="/" className="inline-block mt-5 bg-[#fed700] hover:bg-[#e8c400] text-[#333e48] px-6 py-2.5 rounded-full text-xs font-black transition-colors cursor-pointer border-none">
+                  Ver Todos os Itens
+                </Link>
+              </div>
+            )}
+          </main>
         </div>
       </div>
     </div>
   )
 }
-

@@ -32,3 +32,20 @@ export function truncate(str: string, length = 160) {
   if (str.length <= length) return str
   return str.slice(0, length).trim() + '…'
 }
+
+export function cleanDescription(desc: string | null): string {
+  if (!desc) return ''
+  const metaIndex = desc.indexOf('<span class="im">')
+  const altMetaIndex = desc.indexOf('<strong>Editora</strong>')
+  const cutIndex = metaIndex !== -1 ? metaIndex : (altMetaIndex !== -1 ? altMetaIndex : -1)
+
+  let cleanText = cutIndex !== -1 ? desc.slice(0, cutIndex) : desc
+
+  cleanText = cleanText
+    .replace(/\[acf[^\]]*\]/gi, '')
+    .replace(/<[^>]*>/g, '')
+    .trim()
+
+  return cleanText || 'Nenhuma descrição detalhada disponível.'
+}
+

@@ -34,6 +34,32 @@ export interface Tag {
   slug: string
 }
 
+export interface Product {
+  id: number
+  wp_id: number | null
+  title: string
+  slug: string
+  description: string | null
+  price: number
+  regular_price: number | null
+  sale_price: number | null
+  category_id: number | null
+  status: string
+  published_at: string | null
+  created_at: string
+  updated_at: string
+  category?: ProductCategory | null
+}
+
+export interface ProductCategory {
+  id: number
+  wp_id: number | null
+  name: string
+  slug: string
+  description: string | null
+  created_at: string
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -52,6 +78,17 @@ export interface Database {
         Insert: Omit<Author, 'id'>
         Update: Partial<Omit<Author, 'id'>>
       }
+      products: {
+        Row: Product
+        Insert: Omit<Product, 'id' | 'category'>
+        Update: Partial<Omit<Product, 'id' | 'category'>>
+      }
+      product_categories: {
+        Row: ProductCategory
+        Insert: Omit<ProductCategory, 'id'>
+        Update: Partial<Omit<ProductCategory, 'id'>>
+      }
     }
   }
 }
+
