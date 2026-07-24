@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import BookCard from '@/components/BookCard'
+import HeroCoverCarousel from '@/components/HeroCoverCarousel'
 import Link from 'next/link'
 import { BookOpen, X, Filter } from 'lucide-react'
 import type { Metadata } from 'next'
@@ -90,20 +91,9 @@ export default async function HomePage({ searchParams }: PageProps) {
             </div>
           </div>
           
-          {/* Cover showcase */}
-          <div className="hidden lg:flex gap-6 items-center">
-            <div className="w-36 h-48 rounded-xl shadow-xl origin-bottom -rotate-6 transform transition-all hover:rotate-0"
-              style={{ background: 'linear-gradient(135deg, #004380, #0073c6)', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <span className="text-[8px] uppercase font-bold tracking-wider text-blue-200">Revit</span>
-              <span className="font-serif font-black text-xs text-white">Manual de BIM Aplicado</span>
-              <span className="text-[8px] text-blue-200 border-t border-white/20 pt-1">Editora ProBooks</span>
-            </div>
-            <div className="w-36 h-48 rounded-xl shadow-xl rotate-6 transform transition-all hover:rotate-0"
-              style={{ background: 'linear-gradient(135deg, #0f172a, #334155)', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <span className="text-[8px] uppercase font-bold tracking-wider text-slate-300">Revista</span>
-              <span className="font-serif font-black text-xs text-white">CADESIGN Especial</span>
-              <span className="text-[8px] text-slate-300 border-t border-white/20 pt-1">totalCAD</span>
-            </div>
+          {/* Cover showcase (Carrossel Interativo com 5 conjuntos de capas reais) */}
+          <div className="hidden lg:flex items-center">
+            <HeroCoverCarousel />
           </div>
         </div>
       </section>
