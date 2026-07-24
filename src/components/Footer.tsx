@@ -17,13 +17,12 @@ export default function Footer() {
           {/* Brand Column (EBBIM style) */}
           <div>
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-base shadow-sm">
-                B
-              </div>
-              <div>
-                <span className="font-bold text-white text-base block leading-none">Biblioteca BBBIM</span>
-                <span className="text-slate-500 text-[10px] uppercase font-bold tracking-widest leading-none mt-1 block">Acervo Técnico</span>
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src="/logo/logo-branco.png" 
+                alt="BBBIM — Biblioteca de Tecnologia e Construção" 
+                className="h-10 w-auto object-contain" 
+              />
             </div>
             <p className="text-sm leading-relaxed text-slate-400">
               O maior acervo de Building Information Modeling do Brasil. Consulta e empréstimo de livros físicos, mídias digitais e documentos eletrônicos. Uma iniciativa integrada para a capacitação em BIM.

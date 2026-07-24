@@ -69,15 +69,18 @@ function LoginForm() {
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-3xl border border-border shadow-sm">
         
         {/* Header */}
-        <div className="text-center">
-          <div className="mx-auto w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-white font-black text-xl shadow-sm mb-4">
-            B
-          </div>
+        <div className="text-center flex flex-col items-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img 
+            src="/logo/logo-preto.png" 
+            alt="BBBIM Logo" 
+            className="h-12 w-auto object-contain mb-4" 
+          />
           <h2 className="text-2xl font-black text-foreground tracking-tight">
             Painel Administrativo
           </h2>
           <p className="mt-1.5 text-xs text-slate-500 uppercase tracking-widest font-bold">
-            Biblioteca BBBIM
+            Gestão do Acervo
           </p>
         </div>
 

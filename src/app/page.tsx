@@ -63,13 +63,18 @@ export default async function HomePage({ searchParams }: PageProps) {
         
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 relative z-10">
           <div className="max-w-2xl">
-            <span className="inline-flex bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-5 border border-primary/20">
-              Acervo de Tecnologia & Construção
-            </span>
+            <div className="flex items-center gap-3 mb-5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src="/logo/logo-extenso-preto.png" 
+                alt="BBBIM — Biblioteca de Tecnologia e Construção" 
+                className="h-10 md:h-12 w-auto object-contain" 
+              />
+            </div>
             <h1 className="text-3xl md:text-5xl font-black mb-5 leading-tight tracking-tight text-foreground">
               A Empresa Brasileira de <span className="text-primary">BIM</span> evoluiu. <br />
               <span className="text-2xl md:text-3xl font-medium text-slate-500 block mt-2">
-                Conheça o acervo da biblioteca <span className="font-bold text-primary">BBBIM</span>.
+                Conheça o acervo técnico oficial da marca <span className="font-bold text-primary">BBBIM</span>.
               </span>
             </h1>
             <p className="text-slate-500 text-sm md:text-base leading-relaxed mb-8 max-w-xl">

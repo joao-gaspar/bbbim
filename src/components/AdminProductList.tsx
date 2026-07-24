@@ -67,9 +67,17 @@ export default function AdminProductList({ initialProducts, categories }: Props)
       
       {/* ── Control Header ── */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-3xl border border-border shadow-xs">
-        <div>
-          <h1 className="text-xl font-black text-foreground">Gerenciamento de Acervo</h1>
-          <p className="text-xs text-slate-400 mt-1 uppercase tracking-wider font-bold">Biblioteca BBBIM</p>
+        <div className="flex items-center gap-4">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img 
+            src="/logo/logo-preto.png" 
+            alt="BBBIM Logo" 
+            className="h-9 w-auto object-contain hidden sm:block" 
+          />
+          <div>
+            <h1 className="text-xl font-black text-foreground">Gerenciamento de Acervo</h1>
+            <p className="text-xs text-slate-400 mt-0.5 uppercase tracking-wider font-bold">Painel do Administrador</p>
+          </div>
         </div>
         
         <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">

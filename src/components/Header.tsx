@@ -32,17 +32,14 @@ export default function Header() {
       <header className="border-b border-border bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 md:h-20 flex items-center justify-between gap-6">
           
-          {/* Logo in EBBIM Style */}
+          {/* Logo Oficial da Marca BBBIM */}
           <Link href="/" className="flex items-center gap-3 flex-shrink-0 cursor-pointer">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg shadow-sm">
-              B
-            </div>
-            <div className="flex items-baseline gap-2">
-              <span className="font-extrabold text-primary text-xl tracking-tight leading-none">BBBIM</span>
-              <span className="hidden sm:inline text-muted-foreground text-sm font-light">
-                / Biblioteca
-              </span>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img 
+              src="/logo/logo-preto.png" 
+              alt="BBBIM — Biblioteca de Tecnologia e Construção" 
+              className="h-10 md:h-11 w-auto object-contain" 
+            />
           </Link>
 
           {/* Search Bar (Center) in EBBIM Style */}
