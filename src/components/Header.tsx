@@ -25,105 +25,100 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 shadow-md bg-white border-b border-[#fed700]/20">
-      <div className="bg-[#fed700] text-[#333e48] text-xs py-1.5 px-4 hidden md:block">
-        <div className="max-w-7xl mx-auto flex justify-between items-center font-semibold">
-          <span>Bem-vindo à Biblioteca BBBIM</span>
-          <div className="flex gap-4">
-            <Link href="/" className="hover:underline">Como pegar emprestado?</Link>
-            <Link href="/" className="hover:underline">Contato</Link>
-          </div>
-        </div>
-      </div>
+    <div className="sticky top-0 z-50 shadow-sm">
+      {/* EBBIM Top Decorative Stripe */}
+      <div className="h-1 w-full bg-primary"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-        <div className="flex items-center justify-between gap-6">
+      <header className="border-b border-border bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 md:h-20 flex items-center justify-between gap-6">
           
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <div className="w-10 h-10 rounded-full bg-[#fed700] flex items-center justify-center text-[#333e48] font-black text-xl">
+          {/* Logo in EBBIM Style */}
+          <Link href="/" className="flex items-center gap-3 flex-shrink-0 cursor-pointer">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg shadow-sm">
               B
             </div>
-            <div>
-              <span className="font-black text-[#333e48] text-2xl tracking-tighter block leading-none">BBBIM</span>
-              <span className="text-gray-500 text-[10px] uppercase font-bold tracking-widest leading-none">Biblioteca</span>
+            <div className="flex items-baseline gap-2">
+              <span className="font-extrabold text-primary text-xl tracking-tight leading-none">BBBIM</span>
+              <span className="hidden sm:inline text-muted-foreground text-sm font-light">
+                / Biblioteca
+              </span>
             </div>
           </Link>
 
-          {/* Search Bar (Center) */}
+          {/* Search Bar (Center) in EBBIM Style */}
           <div className="hidden md:flex flex-1 max-w-2xl">
-            <form onSubmit={handleSearch} className="flex w-full border-2 border-[#fed700] rounded-full overflow-hidden bg-white">
+            <form onSubmit={handleSearch} className="flex w-full border border-border rounded-full overflow-hidden bg-white shadow-xs focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
               <input 
                 type="text" 
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Buscar livros, revistas, CDs, DVDs no acervo..." 
-                className="w-full px-5 py-2.5 text-sm text-gray-700 outline-none"
+                className="w-full px-5 py-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground"
               />
-              <button type="submit" className="bg-[#fed700] hover:bg-[#e8c400] text-[#333e48] px-6 flex items-center justify-center transition-colors cursor-pointer border-none">
-                <Search size={20} />
+              <button type="submit" className="bg-primary hover:bg-primary-dark text-white px-6 flex items-center justify-center transition-colors cursor-pointer border-none">
+                <Search size={18} />
               </button>
             </form>
           </div>
 
-          {/* Actions */}
-          <div className="hidden md:flex items-center gap-6 text-[#333e48]">
-            <button className="flex items-center gap-2 hover:text-[#fed700] transition-colors cursor-pointer border-none bg-transparent">
-              <User size={24} strokeWidth={1.5} />
+          {/* Actions with EBBIM colors */}
+          <div className="hidden md:flex items-center gap-6 text-foreground">
+            <button className="flex items-center gap-2 hover:text-accent transition-colors cursor-pointer border-none bg-transparent">
+              <User size={22} strokeWidth={1.75} className="text-muted-foreground group-hover:text-accent" />
               <div className="text-left leading-none">
-                <span className="block text-[11px] text-gray-500">Minha Conta</span>
-                <span className="block text-sm font-bold">Entrar</span>
+                <span className="block text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Minha Conta</span>
+                <span className="block text-xs font-bold text-foreground mt-0.5">Entrar</span>
               </div>
             </button>
 
-            <button className="flex items-center gap-3 hover:text-[#fed700] transition-colors relative group cursor-pointer border-none bg-transparent">
+            <button className="flex items-center gap-3 hover:text-accent transition-colors relative group cursor-pointer border-none bg-transparent">
               <div className="relative">
-                <BookMarked size={28} strokeWidth={1.5} />
-                <span className="absolute -top-1 -right-2 bg-[#fed700] text-[#333e48] text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+                <BookMarked size={24} strokeWidth={1.75} className="text-muted-foreground group-hover:text-accent" />
+                <span className="absolute -top-1.5 -right-2 bg-accent text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border-2 border-white shadow-xs">
                   0
                 </span>
               </div>
               <div className="text-left leading-none">
-                <span className="block text-[11px] text-gray-500">Meus Empréstimos</span>
-                <span className="block text-sm font-bold">Ver Lista</span>
+                <span className="block text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Acervo</span>
+                <span className="block text-xs font-bold text-foreground mt-0.5">Meus Empréstimos</span>
               </div>
             </button>
           </div>
 
           {/* Mobile toggle */}
-          <button onClick={() => setOpen(!open)} className="md:hidden text-[#333e48] p-2 border-none bg-transparent">
+          <button onClick={() => setOpen(!open)} className="md:hidden text-foreground p-2 border-none bg-transparent">
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
         {/* Mobile Search & Menu */}
         {open && (
-          <div className="md:hidden pt-4 pb-2 border-t border-gray-100 mt-4 space-y-4">
-            <form onSubmit={handleSearch} className="flex w-full border-2 border-[#fed700] rounded-full overflow-hidden bg-white">
+          <div className="md:hidden pt-4 pb-4 px-4 border-t border-border bg-white space-y-4 shadow-inner">
+            <form onSubmit={handleSearch} className="flex w-full border border-border rounded-full overflow-hidden bg-white">
               <input 
                 type="text" 
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Buscar no acervo..." 
-                className="w-full px-4 py-2 text-sm text-gray-700 outline-none"
+                className="w-full px-4 py-2 text-sm text-foreground outline-none"
               />
-              <button type="submit" className="bg-[#fed700] text-[#333e48] px-4 flex items-center justify-center border-none">
-                <Search size={18} />
+              <button type="submit" className="bg-primary text-white px-4 flex items-center justify-center border-none">
+                <Search size={16} />
               </button>
             </form>
             <div className="flex justify-around pt-2">
-              <button className="flex flex-col items-center gap-1 text-[#333e48] border-none bg-transparent">
-                <User size={20} />
+              <button className="flex flex-col items-center gap-1 text-foreground border-none bg-transparent">
+                <User size={20} className="text-muted-foreground" />
                 <span className="text-xs font-semibold">Conta</span>
               </button>
-              <button className="flex flex-col items-center gap-1 text-[#333e48] border-none bg-transparent">
-                <BookMarked size={20} />
+              <button className="flex flex-col items-center gap-1 text-foreground border-none bg-transparent">
+                <BookMarked size={20} className="text-muted-foreground" />
                 <span className="text-xs font-semibold">Lista (0)</span>
               </button>
             </div>
           </div>
         )}
-      </div>
-    </header>
+      </header>
+    </div>
   )
 }

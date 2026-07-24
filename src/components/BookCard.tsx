@@ -44,10 +44,10 @@ export default function BookCard({ book }: { book: Product }) {
   const imageUrl = (uploadsMap as Record<string, string>)[book.slug] || null
 
   return (
-    <div className="group flex flex-col bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300">
+    <div className="group flex flex-col bg-white border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
       
       {/* Book Cover */}
-      <Link href={`/livro/${book.slug}`} className="relative block w-full pt-[135%] overflow-hidden cursor-pointer bg-slate-100 border-b border-gray-50">
+      <Link href={`/livro/${book.slug}`} className="relative block w-full pt-[135%] overflow-hidden cursor-pointer bg-[#eceff2]/40 border-b border-border/50">
         {imageUrl ? (
           <Image 
             src={imageUrl} 
@@ -90,33 +90,33 @@ export default function BookCard({ book }: { book: Product }) {
       </Link>
 
       <div className="p-4 flex flex-col flex-1 bg-white">
-        {/* Category */}
-        <span className="text-[10px] font-bold text-[#fed700] uppercase tracking-wider mb-1 filter brightness-90">
+        {/* Category in EBBIM accent blue */}
+        <span className="text-[10px] font-bold text-accent uppercase tracking-wider mb-1">
           {book.category?.name || 'Acervo Geral'}
         </span>
         
         {/* Title */}
         <Link href={`/livro/${book.slug}`} className="flex-1 cursor-pointer">
-          <h3 className="text-sm font-bold text-[#333e48] leading-snug line-clamp-2 hover:text-[#0ea5e9] transition-colors">
+          <h3 className="text-sm font-bold text-foreground leading-snug line-clamp-2 hover:text-primary transition-colors">
             {book.title}
           </h3>
         </Link>
 
         {/* Availability / Action */}
-        <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between">
+        <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between">
           {isDigital ? (
-            <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full">
-              Acesso Digital
+            <span className="text-[10px] font-medium text-accent bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full">
+              Digital
             </span>
           ) : (
-            <span className="text-[10px] font-bold text-green-600 bg-green-50 px-2.5 py-0.5 rounded-full">
-              Disponível Físico
+            <span className="text-[10px] font-medium text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">
+              Físico
             </span>
           )}
           
           <Link 
             href={`/livro/${book.slug}`}
-            className="bg-[#fed700] hover:bg-[#e8c400] text-[#333e48] px-3.5 py-1.5 rounded-full text-[11px] font-black tracking-wide transition-colors cursor-pointer border-none"
+            className="bg-primary hover:bg-primary-dark text-white px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-wide transition-colors cursor-pointer border-none shadow-xs"
           >
             {isDigital ? 'Acessar' : 'Reservar'}
           </Link>

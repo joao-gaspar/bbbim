@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { BookOpen } from 'lucide-react'
 
 const categories = [
   { name: 'Livros', slug: 'livros' },
@@ -11,31 +10,34 @@ const categories = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: '#202935' }} className="text-slate-400 mt-20 border-t-4 border-[#fed700]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+    <footer className="bg-[#080b0f] text-slate-400 mt-20 border-t border-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-          {/* Brand */}
+          {/* Brand Column (EBBIM style) */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-full bg-[#fed700] flex items-center justify-center text-[#333e48] font-black text-lg">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-base shadow-sm">
                 B
               </div>
-              <span className="font-bold text-white text-lg">Biblioteca BBBIM</span>
+              <div>
+                <span className="font-bold text-white text-base block leading-none">Biblioteca BBBIM</span>
+                <span className="text-slate-500 text-[10px] uppercase font-bold tracking-widest leading-none mt-1 block">Acervo Técnico</span>
+              </div>
             </div>
-            <p className="text-sm leading-relaxed">
-              O maior acervo de Building Information Modeling do Brasil. Consulta e empréstimo de livros físicos, mídias digitais e documentos eletrônicos nos moldes do projeto archive.org.
+            <p className="text-sm leading-relaxed text-slate-400">
+              O maior acervo de Building Information Modeling do Brasil. Consulta e empréstimo de livros físicos, mídias digitais e documentos eletrônicos. Uma iniciativa integrada para a capacitação em BIM.
             </p>
           </div>
 
-          {/* Categories */}
+          {/* Categories Column */}
           <div>
-            <h3 className="font-semibold text-white mb-4">Categorias do Acervo</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold text-white mb-5 text-sm uppercase tracking-wider">Categorias do Acervo</h3>
+            <ul className="space-y-3">
               {categories.map(cat => (
                 <li key={cat.slug}>
                   <Link href={`/?cat=${cat.slug}`}
-                    className="text-sm hover:text-[#fed700] transition-colors">
+                    className="text-sm hover:text-accent transition-colors">
                     {cat.name}
                   </Link>
                 </li>
@@ -43,10 +45,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Links */}
+          {/* Navigation Column */}
           <div>
-            <h3 className="font-semibold text-white mb-4">Navegação</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold text-white mb-5 text-sm uppercase tracking-wider">Navegação</h3>
+            <ul className="space-y-3">
               {[
                 { href: '/', label: 'Catálogo Geral' },
                 { href: '/', label: 'Como Funciona o Empréstimo' },
@@ -54,16 +56,17 @@ export default function Footer() {
                 { href: '/', label: 'Ajuda / Contato' },
               ].map((l, i) => (
                 <li key={i}>
-                  <Link href={l.href} className="text-sm hover:text-[#fed700] transition-colors">{l.label}</Link>
+                  <Link href={l.href} className="text-sm hover:text-accent transition-colors">{l.label}</Link>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-slate-700 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs">© {new Date().getFullYear()} Biblioteca BBBIM. Todos os direitos reservados.</p>
-          <p className="text-xs">Sistema de Gestão de Acervo Digital + Físico</p>
+        {/* Bottom Bar */}
+        <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-slate-500">© {new Date().getFullYear()} Biblioteca BBBIM. Integrante do ecossistema EBBIM.</p>
+          <p className="text-xs text-slate-500">Sistema de Gestão de Acervo Digital + Físico</p>
         </div>
       </div>
     </footer>

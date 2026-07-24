@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import BookCard from '@/components/BookCard'
 import Link from 'next/link'
-import { ArrowRight, BookOpen, Search, X, Filter } from 'lucide-react'
+import { BookOpen, X, Filter } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -55,45 +55,49 @@ export default async function HomePage({ searchParams }: PageProps) {
   const activeCategory = categories?.find(c => c.slug === categorySlug)
 
   return (
-    <div className="bg-[#f4f6f8] min-h-screen">
-      {/* ── Banner Principal / Hero ── */}
-      <section className="relative bg-[#333e48] text-white overflow-hidden py-14 px-6 border-b border-[#fed700]/30">
+    <div className="bg-[#eceff2]/40 min-h-screen">
+      {/* ── Banner Principal / Hero (Estilo Clean EBBIM) ── */}
+      <section className="relative bg-white text-foreground overflow-hidden py-16 px-6 border-b border-border">
         <div className="absolute inset-0 opacity-5"
-          style={{ backgroundImage: 'radial-gradient(circle at 10% 20%, white 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+          style={{ backgroundImage: 'radial-gradient(circle at 10% 20%, #004380 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 relative z-10">
           <div className="max-w-2xl">
-            <span className="inline-block bg-[#fed700] text-[#333e48] text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-4">
+            <span className="inline-flex bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-5 border border-primary/20">
               Acervo de Tecnologia & Construção
             </span>
-            <h1 className="text-3xl md:text-5xl font-black mb-4 leading-tight tracking-tight">
-              Biblioteca Virtual & Física <br />
-              <span className="text-[#fed700]">BBBIM</span>
+            <h1 className="text-3xl md:text-5xl font-black mb-5 leading-tight tracking-tight text-foreground">
+              A melhor escola de <span className="text-primary">BIM</span> do Brasil evoluiu. <br />
+              <span className="text-2xl md:text-3xl font-medium text-slate-500 block mt-2">
+                Conheça o acervo da biblioteca <span className="font-bold text-primary">BBBIM</span>.
+              </span>
             </h1>
-            <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6">
+            <p className="text-slate-500 text-sm md:text-base leading-relaxed mb-8 max-w-xl">
               Explore nossa biblioteca técnica de BIM (Building Information Modeling). Pegue emprestado livros físicos, revistas especializadas, mídias ou acesse arquivos eletrônicos digitalizados de forma instantânea.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a href="#catalogo" className="bg-[#fed700] hover:bg-[#e8c400] text-[#333e48] px-6 py-3 rounded-full text-xs font-black transition-colors cursor-pointer border-none">
+              <a href="#catalogo" className="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-full text-xs font-bold transition-all cursor-pointer border-none shadow-sm hover:shadow-md">
                 Explorar Acervo
               </a>
-              <Link href="/" className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3 rounded-full text-xs font-black transition-colors">
+              <Link href="/" className="bg-[#eceff2]/70 hover:bg-[#eceff2] text-foreground border border-border px-6 py-3 rounded-full text-xs font-bold transition-colors">
                 Como Funciona?
               </Link>
             </div>
           </div>
-          {/* Cover showcase */}
-          <div className="hidden lg:flex gap-4 items-center">
-            <div className="w-36 h-48 rounded-lg shadow-2xl origin-bottom -rotate-6 transform transition-all hover:rotate-0"
-              style={{ background: 'linear-gradient(135deg, #1e3a8a, #3b82f6)', padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          
+          {/* Cover showcase with EBBIM colors */}
+          <div className="hidden lg:flex gap-6 items-center">
+            <div className="w-36 h-48 rounded-xl shadow-xl origin-bottom -rotate-6 transform transition-all hover:rotate-0"
+              style={{ background: 'linear-gradient(135deg, #004380, #0073c6)', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <span className="text-[8px] uppercase font-bold tracking-wider text-blue-200">Revit</span>
               <span className="font-serif font-black text-xs text-white">Manual de BIM Aplicado</span>
               <span className="text-[8px] text-blue-200 border-t border-white/20 pt-1">Editora ProBooks</span>
             </div>
-            <div className="w-36 h-48 rounded-lg shadow-2xl rotate-6 transform transition-all hover:rotate-0"
-              style={{ background: 'linear-gradient(135deg, #7c2d12, #ea580c)', padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <span className="text-[8px] uppercase font-bold tracking-wider text-orange-200">Revista</span>
+            <div className="w-36 h-48 rounded-xl shadow-xl rotate-6 transform transition-all hover:rotate-0"
+              style={{ background: 'linear-gradient(135deg, #0f172a, #334155)', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <span className="text-[8px] uppercase font-bold tracking-wider text-slate-300">Revista</span>
               <span className="font-serif font-black text-xs text-white">CADESIGN Especial</span>
-              <span className="text-[8px] text-orange-200 border-t border-white/20 pt-1">totalCAD</span>
+              <span className="text-[8px] text-slate-300 border-t border-white/20 pt-1">totalCAD</span>
             </div>
           </div>
         </div>
@@ -105,10 +109,10 @@ export default async function HomePage({ searchParams }: PageProps) {
           
           {/* ── Sidebar (Filtro por Categorias) ── */}
           <aside className="w-full lg:w-64 flex-shrink-0 space-y-6">
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-              <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-4">
-                <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
-                  <Filter size={16} className="text-[#fed700] filter brightness-90" />
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-border">
+              <div className="flex items-center justify-between pb-4 border-b border-border mb-4">
+                <h3 className="font-bold text-foreground text-sm flex items-center gap-2">
+                  <Filter size={16} className="text-accent" />
                   Categorias
                 </h3>
                 {categorySlug && (
@@ -119,14 +123,14 @@ export default async function HomePage({ searchParams }: PageProps) {
               </div>
               
               {categories && categories.length > 0 ? (
-                <ul className="space-y-1.5">
+                <ul className="space-y-1">
                   <li>
                     <Link 
                       href={query ? `/?q=${query}` : '/'}
-                      className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
                         !categorySlug 
-                          ? 'bg-[#fed700] text-[#333e48]' 
-                          : 'text-slate-600 hover:bg-slate-50'
+                          ? 'bg-primary text-white shadow-xs' 
+                          : 'text-slate-600 hover:bg-[#eceff2]/60'
                       }`}
                     >
                       <span>Todos os Itens</span>
@@ -136,10 +140,10 @@ export default async function HomePage({ searchParams }: PageProps) {
                     <li key={cat.id}>
                       <Link 
                         href={`/?cat=${cat.slug}${query ? `&q=${query}` : ''}`}
-                        className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                        className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
                           categorySlug === cat.slug 
-                            ? 'bg-[#fed700] text-[#333e48]' 
-                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                            ? 'bg-primary text-white shadow-xs' 
+                            : 'text-slate-600 hover:bg-[#eceff2]/60 hover:text-foreground'
                         }`}
                       >
                         <span className="truncate">{cat.name}</span>
@@ -153,19 +157,19 @@ export default async function HomePage({ searchParams }: PageProps) {
             </div>
 
             {/* Regulamento rápido */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-              <h4 className="font-bold text-slate-800 text-sm mb-3">Como pegar emprestado?</h4>
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-border">
+              <h4 className="font-bold text-foreground text-sm mb-3">Como pegar emprestado?</h4>
               <ul className="text-xs text-slate-500 space-y-3 leading-relaxed">
                 <li className="flex gap-2">
-                  <span className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700 flex-shrink-0">1</span>
+                  <span className="w-5 h-5 rounded-full bg-[#eceff2] flex items-center justify-center font-bold text-foreground flex-shrink-0">1</span>
                   <span>Escolha o item e clique em <strong>Reservar</strong>.</span>
                 </li>
                 <li className="flex gap-2">
-                  <span className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700 flex-shrink-0">2</span>
+                  <span className="w-5 h-5 rounded-full bg-[#eceff2] flex items-center justify-center font-bold text-foreground flex-shrink-0">2</span>
                   <span>Para itens digitais, o download ou leitura é instantâneo.</span>
                 </li>
                 <li className="flex gap-2">
-                  <span className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700 flex-shrink-0">3</span>
+                  <span className="w-5 h-5 rounded-full bg-[#eceff2] flex items-center justify-center font-bold text-foreground flex-shrink-0">3</span>
                   <span>Itens físicos deverão ser retirados na biblioteca.</span>
                 </li>
               </ul>
@@ -175,9 +179,9 @@ export default async function HomePage({ searchParams }: PageProps) {
           {/* ── Main Catalog Grid ── */}
           <main className="flex-1">
             {/* Header de resultados */}
-            <div className="bg-white rounded-2xl p-5 mb-6 shadow-sm border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="bg-white rounded-2xl p-5 mb-6 shadow-sm border border-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h2 className="text-lg font-bold text-slate-800 leading-tight">
+                <h2 className="text-lg font-bold text-foreground leading-tight">
                   {activeCategory ? activeCategory.name : 'Catálogo Geral'}
                 </h2>
                 <p className="text-xs text-slate-400 mt-1">
@@ -190,7 +194,7 @@ export default async function HomePage({ searchParams }: PageProps) {
               {(query || categorySlug) && (
                 <div className="flex flex-wrap gap-2">
                   {query && (
-                    <span className="inline-flex items-center gap-1.5 bg-slate-100 text-slate-700 text-[10px] font-bold px-3 py-1 rounded-full">
+                    <span className="inline-flex items-center gap-1.5 bg-[#eceff2] text-foreground text-[10px] font-bold px-3 py-1.5 rounded-full border border-border/80">
                       Busca: {query}
                       <Link href={`/${categorySlug ? `?cat=${categorySlug}` : ''}`} className="hover:text-red-500">
                         <X size={12} />
@@ -198,7 +202,7 @@ export default async function HomePage({ searchParams }: PageProps) {
                     </span>
                   )}
                   {categorySlug && activeCategory && (
-                    <span className="inline-flex items-center gap-1.5 bg-slate-100 text-slate-700 text-[10px] font-bold px-3 py-1 rounded-full">
+                    <span className="inline-flex items-center gap-1.5 bg-[#eceff2] text-foreground text-[10px] font-bold px-3 py-1.5 rounded-full border border-border/80">
                       Categoria: {activeCategory.name}
                       <Link href={`/${query ? `?q=${query}` : ''}`} className="hover:text-red-500">
                         <X size={12} />
@@ -217,13 +221,13 @@ export default async function HomePage({ searchParams }: PageProps) {
                 ))}
               </div>
             ) : (
-              <div className="bg-white rounded-2xl py-20 text-center border border-gray-100 shadow-sm">
+              <div className="bg-white rounded-2xl py-20 text-center border border-border shadow-sm">
                 <BookOpen size={48} className="mx-auto mb-4 text-slate-300" />
-                <h3 className="font-bold text-slate-800 text-lg mb-1">Nenhum item encontrado</h3>
+                <h3 className="font-bold text-foreground text-lg mb-1">Nenhum item encontrado</h3>
                 <p className="text-slate-500 text-sm max-w-sm mx-auto">
                   Tente alterar seus termos de busca ou selecione outra categoria na barra lateral.
                 </p>
-                <Link href="/" className="inline-block mt-5 bg-[#fed700] hover:bg-[#e8c400] text-[#333e48] px-6 py-2.5 rounded-full text-xs font-black transition-colors cursor-pointer border-none">
+                <Link href="/" className="inline-block mt-5 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-full text-xs font-bold transition-colors cursor-pointer border-none shadow-sm">
                   Ver Todos os Itens
                 </Link>
               </div>
